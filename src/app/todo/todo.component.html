@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <form #postForm="ngForm" (ngSubmit)="onCreatePost(postForm)">
+        <div class="form-group">
+          <label for="completed">Completed</label>
+          <input
+            type="checkbox"
+            class="form-control"
+            id="completed"
+        
+            [ngModel]="completed"
+            name="completed"
+          />
+        </div>
+        <div class="form-group">
+          <label for="todo">Todo item</label>
+          <textarea
+            class="form-control"
+            id="todo"
+            maxlength="255"
+            required
+            ngModel
+            name="todo"
+          ></textarea>
+        </div>
+        <button
+          class="btn btn-primary"
+          type="submit"
+          [disabled]="!postForm.valid"
+        >
+          Save TODO
+        </button>
+      </form>
+    </div>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <button class="btn btn-primary" (click)="onFetchPosts()">
+        Fetch TODO's
+      </button>
+      |
+      <button
+        class="btn btn-danger"
+        [disabled]="loadedPosts.length < 1"
+        (click)="onClearPosts()"
+      >
+        Clear TODO
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <p *ngIf="loadedPosts.length < 1 && !isFetching">No todo items available!</p>
+      <ul class="list-group" *ngIf="loadedPosts.length >=1 && !isFetching">
+        <li class="list-group-item" *ngFor="let todo of loadedPosts; let i = index">
+          <div class="row">
+            <div class="col-md-8">
+              <h3>Completed: {{ todo.completed }}</h3>
+              <p>{{ todo.todo }}</p>
+            </div>
+            <div class="col-md-offset-8  col-md-1">
+              <button type="button" class="btn btn-danger btn-sm" (click)="deleteTodoItem(todo)">Delete</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <p *ngIf="isFetching">Loading...</p>
+    </div>
+  </div>

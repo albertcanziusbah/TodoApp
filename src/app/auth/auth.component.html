@@ -1,0 +1,61 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="alert alert-danger" *ngIf="error">
+           <p>{{ error }}</p>
+        </div>
+        <div class="alert alert-success" *ngIf="userSuccess">
+            <p>{{ userSuccess }}</p>
+        </div>
+       <!-- <div *ngIf="isLoading" style="text-align: center">
+           <app-loading-spinner></app-loading-spinner>
+       </div> -->
+        <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
+            <div class="form-group">
+                <label for="email">E-Mail</label>
+                <input
+                 type="email"
+                 id="email"
+                 class="form-control"
+                 ngModel
+                 name="email"
+                 required
+                 email
+                 />
+            </div>
+            <div class="form-group" *ngIf="displaySwitchToConfirm">
+                <label for="password">Password</label>
+                <input
+                 type="password"
+                 id="password"
+                 class="form-control"
+                 ngModel
+                 name="password"
+                 required
+
+                   />
+            </div>
+            <div class="form-group" *ngIf="!displaySwitchToConfirm">
+                    <label for="code">Code</label>
+                    <input
+                     type="password"
+                     id="code"
+                     class="form-control"
+                     ngModel
+                     name="code"
+                     required
+    
+                       />
+            </div>
+            <div>
+                <button 
+                class="btn btn-primary"
+                [disabled]="!authForm.valid" 
+                type="submit">{{ isLoginMode ? 'Login' : displaySwitchToConfirm ? 'Sign Up' : 'Confirm' }}
+            
+                </button> |
+                <button class="btn btn-primary" (click)="onSwitchMode()" type="button">Switch to {{ isLoginMode ? 'Sign Up' : 'Login' }}</button> |
+                <button class="btn btn-primary" (click)="onSwitchToConfirm()" type="button" *ngIf="displaySwitchToConfirm">Switch to Confirm User</button>
+            </div>
+        </form>
+    </div>
+</div>
